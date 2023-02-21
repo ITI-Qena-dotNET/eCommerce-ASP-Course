@@ -1,4 +1,5 @@
 ﻿using eCommerce.Domain.Entities;
+using eCommerce.Infrastructure.Conventions;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -22,5 +23,11 @@ public sealed class AppDbContext : DbContext
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         base.OnModelCreating(modelBuilder);
+    }
+
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        configurationBuilder.Conventions.Add(_ => new StringMaxLengthConvention(80));
+        base.ConfigureConventions(configurationBuilder);
     }
 }
