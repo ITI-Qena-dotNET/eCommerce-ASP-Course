@@ -1,4 +1,5 @@
 using eCommerce.Infrastructure.Data;
+using eCommerce_ASP_Course.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,12 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.MigrateDatabase<AppDbContext>(async (context, services) =>
+    {
+        var logger = services.GetRequiredService<ILogger<AppDbContext>>();
+        await context.SeedAsync(logger);
+    });
+
     app.UseSwagger();
     app.UseSwaggerUI();
 }
