@@ -1,5 +1,6 @@
 ﻿using eCommerce.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace eCommerce.Infrastructure.Data;
 
@@ -19,14 +20,7 @@ public sealed class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<OrderDetail>()
-            .HasKey(od => new { od.OrderID, od.ProductID });
-
-        modelBuilder.Entity<Order>()
-            .HasOne(o => o.Payment)
-            .WithOne(p => p.Order)
-            .HasForeignKey<Payment>(p => p.OrderID);
-
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         base.OnModelCreating(modelBuilder);
     }
 }
