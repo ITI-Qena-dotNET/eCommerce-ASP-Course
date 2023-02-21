@@ -11,8 +11,4 @@ public sealed class Order
     public Payment Payment { get; set; }
 
     public User User { get; set; }
-
-    public int ShippingInfoID { get; set; }
-
-    public ShippingInfo ShippingInfo { get; set; }
 }

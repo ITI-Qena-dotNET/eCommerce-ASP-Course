@@ -15,6 +15,4 @@ public sealed class User
     public string Address { get; set; }
 
     public IEnumerable<Order> Orders { get; set; }
-
-    public IEnumerable<ShippingInfo> ShippingInfos { get; set; }
 }

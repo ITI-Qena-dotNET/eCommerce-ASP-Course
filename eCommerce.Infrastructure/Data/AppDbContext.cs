@@ -15,7 +15,6 @@ public sealed class AppDbContext : DbContext
     public DbSet<Payment> Payments { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<Review> Reviews { get; set; }
-    public DbSet<ShippingInfo> ShippingInfos { get; set; }
     public DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -27,17 +26,6 @@ public sealed class AppDbContext : DbContext
             .HasOne(o => o.Payment)
             .WithOne(p => p.Order)
             .HasForeignKey<Payment>(p => p.OrderID);
-
-        modelBuilder.Entity<Order>()
-            .HasOne(o => o.ShippingInfo)
-            .WithOne(p => p.Order);
-
-        modelBuilder.Entity<User>()
-            .HasMany(u => u.ShippingInfos)
-            .WithOne(si => si.User)
-            .HasForeignKey(u => u.UserID)
-            .OnDelete(DeleteBehavior.NoAction);
-
 
         base.OnModelCreating(modelBuilder);
     }
