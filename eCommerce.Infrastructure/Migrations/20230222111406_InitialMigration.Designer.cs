@@ -12,7 +12,7 @@ using eCommerce.Infrastructure.Data;
 namespace eCommerce.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230221210633_InitialMigration")]
+    [Migration("20230222111406_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
