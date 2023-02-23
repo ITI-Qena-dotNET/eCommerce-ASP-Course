@@ -21,10 +21,10 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MigrateDatabase<AppDbContext>(async (context, services) =>
+    app.MigrateDatabase<AppDbContext>((context, services) =>
     {
         var logger = services.GetRequiredService<ILogger<AppDbContext>>();
-        await context.SeedAsync(logger);
+        context.SeedAsync(logger);
     });
 
     app.UseSwagger();
