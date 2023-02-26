@@ -1,6 +1,8 @@
+using eCommerce.Application.Features.Products.DTOs;
 using eCommerce.Infrastructure.Data;
 using eCommerce_ASP_Course.Extensions;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContextPool<AppDbContext>(o =>
 {
     o.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerConnection"));
+});
+
+builder.Services.AddMediatR(c =>
+{
+    c.RegisterServicesFromAssembly(Assembly.GetCallingAssembly());
+    c.RegisterServicesFromAssemblyContaining<GetAllProductsDTO>();
 });
 
 builder.Services.AddControllers();

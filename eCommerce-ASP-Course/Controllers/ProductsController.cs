@@ -1,4 +1,11 @@
-﻿using eCommerce.Infrastructure.Data;
+﻿using eCommerce.Application.Features.Products.Commands;
+using eCommerce.Application.Features.Products.Commands.InsertNewProduct;
+using eCommerce.Application.Features.Products.Commands.UpdateProduct;
+using eCommerce.Application.Features.Products.DTOs;
+using eCommerce.Application.Features.Products.Queries.GetAllProducts;
+using eCommerce.Application.Features.Products.Queries.GetProductById;
+using eCommerce.Infrastructure.Data;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,16 +16,18 @@ namespace eCommerce_ASP_Course.Controllers;
 public class ProductsController : ControllerBase
 {
     private readonly AppDbContext _context;
+    private readonly IMediator _mediator;
 
-    public ProductsController(AppDbContext context)
+    public ProductsController(AppDbContext context, IMediator mediator)
     {
         _context = context;
+        _mediator = mediator;
     }
 
     [HttpGet]
-    public IActionResult GetAllProducts()
+    public async Task<IActionResult> GetAllProducts(CancellationToken ct)
     {
-        return Ok(_context.Products.ToList());
+        return Ok(await _mediator.Send(new GetAllProductsQuery(), ct));
     }
 
     [HttpGet("Category/{categoryId}")]
@@ -34,8 +43,32 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetById(Guid id)
+    public async Task<IActionResult> GetById(Guid id, CancellationToken ct)
     {
-        return Ok(_context.Products.Find(id));
+        return Ok(await _mediator.Send(new GetProductByIdQuery { ID = id }, ct));
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> InsertNewProduct(InsertNewProductDTO command, CancellationToken ct)
+    {
+        return Ok(await _mediator.Send(new InsertNewProductCommand(command), ct));
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> UpdateProduct(UpdateProductDTO command, CancellationToken ct)
+    {
+        var res = await _mediator.Send(new UpdateProductCommand(command), ct);
+
+        if (res is null)
+            return NotFound();
+
+        return Ok(res);
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> DeleteProduct(Guid id, CancellationToken ct)
+    {
+        await _mediator.Send(new DeleteProductCommand() { ID = id }, ct);
+        return NoContent();
     }
 }
