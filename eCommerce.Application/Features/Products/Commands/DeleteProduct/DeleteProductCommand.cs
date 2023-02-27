@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace eCommerce.Application.Features.Products.Commands;
+namespace eCommerce.Application.Features.Products.Commands.DeleteProduct;
 
 public sealed class DeleteProductCommand : IRequest<Unit>
 {

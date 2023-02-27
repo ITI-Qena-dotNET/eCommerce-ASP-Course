@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Polly;
 
 namespace eCommerce_ASP_Course.Extensions;
@@ -17,7 +18,7 @@ public static class HostExtensions
             {
                 logger.LogInformation("Migrating database associated with context {DbContextName}...", typeof(TContext).Name);
 
-                var retry = Policy.Handle<Exception>()
+                var retry = Policy.Handle<SqlException>()
                         .WaitAndRetry(
                             retryCount: 3,
                             sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
@@ -43,7 +44,7 @@ public static class HostExtensions
                                                 IServiceProvider services) where TContext : DbContext
     {
         // Can be removed if the same database is needed
-        // To be removed in Production
+        // The following line is to be removed in Production
         //context.Database.EnsureDeleted();
 
         if (context.Database.GetPendingMigrations().Any())

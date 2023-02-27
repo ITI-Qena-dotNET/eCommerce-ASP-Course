@@ -19,10 +19,12 @@ builder.Services.AddMediatR(c =>
     c.RegisterServicesFromAssemblyContaining<GetAllProductsDTO>();
 });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddNewtonsoftJson();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen()
+    .AddSwaggerGenNewtonsoftSupport();
 
 var app = builder.Build();
 

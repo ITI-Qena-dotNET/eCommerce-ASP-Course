@@ -1,11 +1,14 @@
-﻿using eCommerce.Application.Features.Products.Commands;
+﻿using eCommerce.Application.Features.Products.Commands.DeleteProduct;
 using eCommerce.Application.Features.Products.Commands.InsertNewProduct;
+using eCommerce.Application.Features.Products.Commands.PatchProduct;
 using eCommerce.Application.Features.Products.Commands.UpdateProduct;
 using eCommerce.Application.Features.Products.DTOs;
 using eCommerce.Application.Features.Products.Queries.GetAllProducts;
 using eCommerce.Application.Features.Products.Queries.GetProductById;
+using eCommerce.Domain.Entities;
 using eCommerce.Infrastructure.Data;
 using MediatR;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -65,7 +68,18 @@ public class ProductsController : ControllerBase
         return Ok(res);
     }
 
-    [HttpDelete]
+    [HttpPatch("{id}")]
+    public async Task<IActionResult> PatchProduct(Guid id, JsonPatchDocument<Product> commandUpdates, CancellationToken ct)
+    {
+        var result = await _mediator.Send(new PatchProductQuery() { ID = id, PatchUpdates = commandUpdates }, ct);
+
+        if (result is null)
+            return NotFound();
+
+        return Ok(result);
+    }
+
+    [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteProduct(Guid id, CancellationToken ct)
     {
         await _mediator.Send(new DeleteProductCommand() { ID = id }, ct);

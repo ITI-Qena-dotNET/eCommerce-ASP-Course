@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace eCommerce.Application.Features.Products.Commands;
+namespace eCommerce.Application.Features.Products.Commands.DeleteProduct;
 
 public sealed class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand, Unit>
 {
