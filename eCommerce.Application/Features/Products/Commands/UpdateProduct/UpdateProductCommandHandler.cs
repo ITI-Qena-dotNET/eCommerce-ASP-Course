@@ -1,6 +1,6 @@
 ﻿using eCommerce.Application.Features.Products.DTOs;
 using eCommerce.Infrastructure.Data;
-using MediatR;
+using Mediator;
 
 namespace eCommerce.Application.Features.Products.Commands.UpdateProduct;
 
@@ -13,7 +13,7 @@ public sealed class UpdateProductCommandHandler : IRequestHandler<UpdateProductC
         _context = context;
     }
 
-    public async Task<UpdateProductDTO?> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+    public async ValueTask<UpdateProductDTO?> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
         var product = await _context.Products.FindAsync(new object[] { request.dto.ID }, cancellationToken);
 

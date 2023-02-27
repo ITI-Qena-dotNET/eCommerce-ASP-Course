@@ -1,6 +1,6 @@
 ﻿using eCommerce.Application.Features.Products.DTOs;
 using eCommerce.Infrastructure.Data;
-using MediatR;
+using Mediator;
 
 namespace eCommerce.Application.Features.Products.Commands.PatchProduct;
 
@@ -13,7 +13,7 @@ public sealed class PatchProductQueryHandler : IRequestHandler<PatchProductQuery
         _context = context;
     }
 
-    public async Task<GetAllProductsDTO?> Handle(PatchProductQuery request, CancellationToken ct)
+    public async ValueTask<GetAllProductsDTO?> Handle(PatchProductQuery request, CancellationToken ct)
     {
         var product = await _context.Products.FindAsync(new object[] { request.ID }, ct);
 

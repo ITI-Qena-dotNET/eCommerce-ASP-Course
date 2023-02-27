@@ -1,6 +1,6 @@
 ﻿using eCommerce.Application.Features.Products.DTOs;
 using eCommerce.Domain.Entities;
-using MediatR;
+using Mediator;
 using Microsoft.AspNetCore.JsonPatch;
 
 namespace eCommerce.Application.Features.Products.Commands.PatchProduct;

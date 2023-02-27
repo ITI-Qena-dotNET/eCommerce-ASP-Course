@@ -1,7 +1,7 @@
 ﻿using eCommerce.Application.Features.Products.DTOs;
 using eCommerce.Domain.Entities;
 using eCommerce.Infrastructure.Data;
-using MediatR;
+using Mediator;
 
 namespace eCommerce.Application.Features.Products.Commands.InsertNewProduct;
 
@@ -14,7 +14,7 @@ public sealed class InsertNewProductCommandHandler : IRequestHandler<InsertNewPr
         _context = context;
     }
 
-    public async Task<GetAllProductsDTO> Handle(InsertNewProductCommand request, CancellationToken cancellationToken)
+    public async ValueTask<GetAllProductsDTO> Handle(InsertNewProductCommand request, CancellationToken cancellationToken)
     {
         Product Product = new()
         {

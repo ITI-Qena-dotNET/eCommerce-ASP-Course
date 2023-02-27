@@ -1,5 +1,5 @@
 ﻿using eCommerce.Infrastructure.Data;
-using MediatR;
+using Mediator;
 using Microsoft.EntityFrameworkCore;
 
 namespace eCommerce.Application.Features.Products.Commands.DeleteProduct;
@@ -13,7 +13,7 @@ public sealed class DeleteProductCommandHandler : IRequestHandler<DeleteProductC
         _context = context;
     }
 
-    public async Task<Unit> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
+    public async ValueTask<Unit> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
     {
         var affected = await _context.Products.Where(x => x.ID == request.ID).ExecuteDeleteAsync(cancellationToken);
         return Unit.Value;

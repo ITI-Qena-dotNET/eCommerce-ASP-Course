@@ -1,5 +1,5 @@
 ﻿using eCommerce.Application.Features.Products.DTOs;
-using MediatR;
+using Mediator;
 
 namespace eCommerce.Application.Features.Products.Queries.GetAllProducts;
 

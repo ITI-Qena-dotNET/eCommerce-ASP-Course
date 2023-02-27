@@ -7,7 +7,7 @@ using eCommerce.Application.Features.Products.Queries.GetAllProducts;
 using eCommerce.Application.Features.Products.Queries.GetProductById;
 using eCommerce.Domain.Entities;
 using eCommerce.Infrastructure.Data;
-using MediatR;
+using Mediator;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

@@ -1,6 +1,6 @@
 ﻿using eCommerce.Application.Features.Products.DTOs;
 using eCommerce.Infrastructure.Data;
-using MediatR;
+using Mediator;
 
 namespace eCommerce.Application.Features.Products.Queries.GetProductById;
 
@@ -13,7 +13,7 @@ public sealed class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQ
         _context = context;
     }
 
-    public async Task<GetAllProductsDTO> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
+    public async ValueTask<GetAllProductsDTO> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
     {
         var product = await _context.Products.FindAsync(new object[] { request.ID }, cancellationToken);
 

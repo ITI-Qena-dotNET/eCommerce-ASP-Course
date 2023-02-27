@@ -1,6 +1,6 @@
 ﻿using eCommerce.Application.Features.Products.DTOs;
 using eCommerce.Infrastructure.Data;
-using MediatR;
+using Mediator;
 using Microsoft.EntityFrameworkCore;
 
 namespace eCommerce.Application.Features.Products.Queries.GetAllProducts;
@@ -14,7 +14,7 @@ public sealed class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQ
         _context = context;
     }
 
-    public async Task<List<GetAllProductsDTO>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
+    public async ValueTask<List<GetAllProductsDTO>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
     {
         var allProducts = await _context.Products
             .Select(x => new { x.ID, x.Name, x.Description, x.Price })
