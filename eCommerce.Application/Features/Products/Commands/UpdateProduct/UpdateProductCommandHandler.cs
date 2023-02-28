@@ -1,21 +1,21 @@
 ﻿using eCommerce.Application.Features.Products.DTOs;
-using eCommerce.Infrastructure.Data;
+using eCommerce.Domain.Contracts;
 using Mediator;
 
 namespace eCommerce.Application.Features.Products.Commands.UpdateProduct;
 
 public sealed class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, UpdateProductDTO>
 {
-    private readonly AppDbContext _context;
+    private readonly IProductRepository _repository;
 
-    public UpdateProductCommandHandler(AppDbContext context)
+    public UpdateProductCommandHandler(IProductRepository repository)
     {
-        _context = context;
+        _repository = repository;
     }
 
     public async ValueTask<UpdateProductDTO?> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
-        var product = await _context.Products.FindAsync(new object[] { request.dto.ID }, cancellationToken);
+        var product = await _repository.GetByIdAsync(request.dto.ID, cancellationToken);
 
         if (product is null)
         {
@@ -26,8 +26,8 @@ public sealed class UpdateProductCommandHandler : IRequestHandler<UpdateProductC
         product.Description = request.dto.Description;
         product.Price = request.dto.Price;
 
-        _context.Products.Update(product);
-        await _context.SaveChangesAsync(cancellationToken);
+        _repository.Update(product);
+        await _repository.CompleteWork(cancellationToken);
 
         return new()
         {

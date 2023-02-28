@@ -6,7 +6,7 @@ namespace eCommerce.Infrastructure.Data;
 
 public static class AppDbContextExtensions
 {
-    public static async void SeedAsync(this AppDbContext context, ILogger<AppDbContext> logger)
+    public static void SeedAsync(this AppDbContext context, ILogger<AppDbContext> logger)
     {
         var categoriesIds = 40;
 

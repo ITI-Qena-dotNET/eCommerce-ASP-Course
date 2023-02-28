@@ -1,21 +1,20 @@
-﻿using eCommerce.Infrastructure.Data;
+﻿using eCommerce.Domain.Contracts;
 using Mediator;
-using Microsoft.EntityFrameworkCore;
 
 namespace eCommerce.Application.Features.Products.Commands.DeleteProduct;
 
 public sealed class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand, Unit>
 {
-    private readonly AppDbContext _context;
+    private readonly IProductRepository _repository;
 
-    public DeleteProductCommandHandler(AppDbContext context)
+    public DeleteProductCommandHandler(IProductRepository repository)
     {
-        _context = context;
+        _repository = repository;
     }
 
     public async ValueTask<Unit> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
     {
-        var affected = await _context.Products.Where(x => x.ID == request.ID).ExecuteDeleteAsync(cancellationToken);
+        var affected = await _repository.DeleteAsync(request.ID, cancellationToken);
         return Unit.Value;
     }
 }

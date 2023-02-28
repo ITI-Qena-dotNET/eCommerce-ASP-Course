@@ -1,10 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentValidation;
 
 namespace eCommerce.Application.Features.Products.Commands.InsertNewProduct;
-internal class InsertNewProductCommandValidator
+
+internal sealed class InsertNewProductCommandValidator : AbstractValidator<InsertNewProductCommand>
 {
+    public InsertNewProductCommandValidator()
+    {
+        RuleFor(x => x.dto.Name)
+            .NotEmpty().WithMessage(a => $"{a.dto.Name} is empty")
+            .NotNull();
+    }
 }

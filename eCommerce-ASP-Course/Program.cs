@@ -4,6 +4,8 @@ using eCommerce_ASP_Course.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Reflection;
+using eCommerce.Domain.Contracts;
+using eCommerce.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,8 @@ builder.Services.AddDbContextPool<AppDbContext>(o =>
 });
 
 builder.Services.AddApplicationServices();
+
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 //builder.Services.AddMediatR(c =>
 //{

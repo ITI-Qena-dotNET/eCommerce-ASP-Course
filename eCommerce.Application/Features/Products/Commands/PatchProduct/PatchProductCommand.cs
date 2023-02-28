@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.JsonPatch;
 
 namespace eCommerce.Application.Features.Products.Commands.PatchProduct;
 
-public sealed class PatchProductQuery : IRequest<GetAllProductsDTO>
+public sealed class PatchProductCommand : IRequest<GetAllProductsDTO>
 {
     public required Guid ID { get; set; }
 

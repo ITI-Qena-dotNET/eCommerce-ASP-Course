@@ -71,7 +71,7 @@ public class ProductsController : ControllerBase
     [HttpPatch("{id}")]
     public async Task<IActionResult> PatchProduct(Guid id, JsonPatchDocument<Product> commandUpdates, CancellationToken ct)
     {
-        var result = await _mediator.Send(new PatchProductQuery() { ID = id, PatchUpdates = commandUpdates }, ct);
+        var result = await _mediator.Send(new PatchProductCommand() { ID = id, PatchUpdates = commandUpdates }, ct);
 
         if (result is null)
             return NotFound();
