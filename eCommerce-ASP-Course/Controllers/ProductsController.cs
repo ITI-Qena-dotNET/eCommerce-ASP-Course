@@ -33,6 +33,12 @@ public class ProductsController : ControllerBase
         return Ok(await _mediator.Send(new GetAllProductsQuery(), ct));
     }
 
+    [HttpGet("filter")]
+    public async Task<IActionResult> FilterProducts(string? filter = null, CancellationToken ct = default)
+    {
+        return Ok(await _mediator.Send(new FilterProductsQuery() { Filter = filter }, ct));
+    }
+
     [HttpGet("Category/{categoryId}")]
     public IActionResult GetAllByCategoryId(int categoryId)
     {
