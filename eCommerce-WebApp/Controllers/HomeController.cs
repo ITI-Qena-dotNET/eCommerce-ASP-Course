@@ -1,8 +1,6 @@
 ﻿using eCommerce_WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using System.Net.Http.Headers;
-using System.Net.Http;
 using System.Text.Json;
 
 namespace eCommerce_WebApp.Controllers;
